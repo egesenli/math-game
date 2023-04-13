@@ -8,7 +8,7 @@ class Player
   end
 
   def answer_question(question)
-    puts "#{@name}: What is #{question}?"
+    puts "#{@name}: #{question}?"
     answer = gets.chomp.to_i
 
     if answer == question.answer
