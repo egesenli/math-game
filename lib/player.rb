@@ -13,6 +13,7 @@ class Player
 
     if answer == question.answer
       puts "Correct!"
+      add_point
     else
       puts "Incorrect! You lose a life."
       lose_life
@@ -21,5 +22,9 @@ class Player
 
   def lose_life
     @lives -= 1
+  end
+
+  def add_point
+    @score += 1
   end
 end
