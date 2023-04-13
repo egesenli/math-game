@@ -7,4 +7,8 @@ class Question
     @question = "What is #{num1} + #{num2}?"
     @answer = num1 + num2
   end
+
+  def to_s
+    @question
+  end
 end
