@@ -1,18 +1,21 @@
 class Scoreboard
   def initialize(players)
     @players = players
+    @lives = Hash.new(3)
   end
 
   def to_s
-    scores = @players.map { |player| "#{player.name}: #{player.score} points, #{player.lives} lives" }
+    scores = @players.map do |player|
+      "#{player.name}: #{@lives[player]}/3"
+    end
     scores.join(" vs ")
   end
 
-  def update_score(player)
-    player.add_point
+  def update_lives(player, correct)
+    @lives[player] -= 1 unless correct
   end
 
-  def update_lives(player)
-    # Update lives
+  def game_over?
+    @lives.values.include?(0)
   end
 end
