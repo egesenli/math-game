@@ -1,6 +1,7 @@
 require_relative 'player'
 require_relative 'question'
 require_relative 'scoreboard'
+
 class Game
   def initialize
     @player1 = Player.new("Player 1")
@@ -12,18 +13,22 @@ class Game
   def play
     loop do
       question = Question.new
-      @current_player.answer_question(question)
+      correct = @current_player.answer_question(question)
 
-      @scoreboard.update_lives(@current_player)
+      @scoreboard.update_lives(@current_player, correct)
       puts @scoreboard.to_s
 
-      break if game_over?
+      if game_over?
+        winner = @player1.lives > 0 ? @player1 : @player2
+        puts "#{winner.name} wins with a score of #{@scoreboard.instance_variable_get(:@lives)[winner]}/3"
+        puts "GAME OVER"
+        puts "Good bye!"
+        return
+      end
 
+      puts "---\nNEW TURN"
       switch_player
     end
-
-    puts "Game over! #{winner.name} wins with a score of #{winner.score}."
-    puts "#{loser.name} has a score of #{loser.score}."
   end
 
   private
@@ -34,13 +39,5 @@ class Game
 
   def game_over?
     @player1.lives == 0 || @player2.lives == 0
-  end
-
-  def winner
-    @player1.score > @player2.score ? @player1 : @player2
-  end
-
-  def loser
-    @player1.score < @player2.score ? @player1 : @player2
   end
 end
