@@ -1,30 +1,22 @@
 class Player
-  attr_reader :name, :lives, :score
+  attr_reader :name, :lives
 
   def initialize(name)
     @name = name
     @lives = 3
-    @score = 0
   end
 
   def answer_question(question)
-    puts "#{@name}: #{question}?"
+    print "#{@name}: #{question} > "
     answer = gets.chomp.to_i
 
     if answer == question.answer
-      puts "Correct!"
-      add_point
+      puts "YES! You are correct."
+      true
     else
-      puts "Incorrect! You lose a life."
-      lose_life
+      puts "Seriously? No!"
+      @lives -= 1
+      false
     end
-  end
-
-  def lose_life
-    @lives -= 1
-  end
-
-  def add_point
-    @score += 1
   end
 end
